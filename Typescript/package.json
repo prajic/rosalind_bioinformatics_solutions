@@ -1,0 +1,28 @@
+{
+  "name": "rosalind",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node src/index",
+    "ba1a": "ts-node src/tasks/ba1a",
+    "ba1b": "ts-node src/tasks/ba1b",
+    "ba1c": "ts-node src/tasks/ba1c",
+    "ba1d": "ts-node src/tasks/ba1d",
+    "ba1e": "ts-node src/tasks/ba1e",
+    "ba1f": "ts-node src/tasks/ba1f",
+    "ba1g": "ts-node src/tasks/ba1g",
+    "ba1h": "ts-node src/tasks/ba1h",
+    "ba1i": "ts-node src/tasks/ba1i",
+    "ba1j": "ts-node src/tasks/ba1j"
+  },
+  "author": "Petar Rajic",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^3.2.0",
+    "typescript": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.7"
+  }
+}
