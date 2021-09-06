@@ -1331,5 +1331,26 @@ namespace Utils
             return peptides;
 
         }
+        public static int GetChange(NumberNumbersListInput taskInput)
+        {
+            var money = taskInput.number;
+            var coins = taskInput.numbers;
+            var minNumberCoins = new List<int>() { 0 };
+            for (var i = 0; i < money + 1; i++)
+            {
+                minNumberCoins.Add(int.MaxValue);
+                for (var ii = 0; ii < coins.Count; ii++)
+                {
+                    if (i >= coins[ii])
+                    {
+                        if (minNumberCoins[i - coins[ii]] + 1 < minNumberCoins[i])
+                        {
+                            minNumberCoins[i] = minNumberCoins[i - coins[ii]] + 1;
+                        }
+                    }
+                }
+            }
+            return minNumberCoins[money];
+        }
     }
 }

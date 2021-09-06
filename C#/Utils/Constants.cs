@@ -321,6 +321,8 @@ namespace Utils
         Reader.ReadListFromFile("ba4lSecondExampleText.txt"),
         Reader.ReadNumbersFromFile("Ba4lSecondExampleNumbers.txt"),
         5);
+        public static NumberNumbersListInput BA5AFirstExample = new NumberNumbersListInput(40, new List<int>() { 1, 5, 10, 20, 25, 50 });
+        public static NumberNumbersListInput BA5ASecondExample = new NumberNumbersListInput(8074, new List<int>() { 24, 13, 12, 7, 5, 3, 1 });
     }
 
     public struct TextNumberInput
@@ -544,5 +546,24 @@ namespace Utils
             return message;
         }
     }
+    public struct NumberNumbersListInput
+    {
+        public int number { get; set; }
+        public List<int> numbers { get; set; }
 
+        public NumberNumbersListInput(int _number, List<int> _numbers)
+        {
+            number = _number;
+            numbers = _numbers;
+        }
+        public override string ToString()
+        {
+            var message = $"Money: {number}\nCoins:";
+            foreach (var coin in numbers)
+            {
+                message += string.Format("{0} ", coin);
+            }
+            return message;
+        }
+    }
 }
