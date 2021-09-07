@@ -125,5 +125,15 @@ namespace Utils
             }
             return pairs;
         }
+        public static SignedPermutations ReadPermutationsFromFile(string fileName)
+        {
+            var permutations = new List<int>();
+            var content = System.IO.File.ReadAllText($"Utils/Tasks/{fileName}").Replace("(","").Replace(")","");
+            foreach(var p in content.Split(" "))
+            {
+                permutations.Add(int.Parse(p));
+            }
+            return new SignedPermutations(permutations);
+        }
     }
 }

@@ -149,6 +149,14 @@ namespace Utils
             }
             Console.WriteLine();
         }
+        public static void WriteOutputToLines<T>(List<T> list)
+        {
+            foreach (var el in list)
+            {
+                Console.WriteLine(" {0} ", el.ToString());
+            }
+            Console.WriteLine();
+        }
         private static List<string> ConvertDNAToKmers(string dna, int k)
         {
             var kmers = Enumerable.Range(0, dna.Length - k + 1).Select(i => dna.Substring(i, k)).ToList();
@@ -1351,6 +1359,47 @@ namespace Utils
                 }
             }
             return minNumberCoins[money];
+        }
+        public static List<SignedPermutations> GreedySort(SignedPermutations signedPermutations)
+        {
+            var permutations = signedPermutations.permutations;
+            var reversalList = new List<List<int>>();
+            for (var i = 1; i <= permutations.Count; i++)
+            {
+                var newPermutations = new List<int>();
+                if (permutations[i - 1] != i)
+                {
+                    var l = 0;
+                    if (permutations.Contains(i))
+                    {
+                        l = permutations.IndexOf(i);
+                    }
+                    if (permutations.Contains(-i))
+                    {
+                        l = permutations.IndexOf(-i);
+                    }
+                    newPermutations = new List<int>(permutations);
+                    for (var ii = i - 1; ii <= l; ii++)
+                    {
+                        newPermutations[ii] = -permutations[l - (ii - i) - 1];
+                    }
+                    reversalList.Add(newPermutations);
+                    permutations = newPermutations;
+                }
+                if (permutations[i - 1] == -i)
+                {
+                    newPermutations = new List<int>(permutations);
+                    newPermutations[i - 1] = i;
+                    reversalList.Add(newPermutations);
+                    permutations = newPermutations;
+                }
+            }
+            var result = new List<SignedPermutations>();
+            foreach (var list in reversalList)
+            {
+                result.Add(new SignedPermutations(list));
+            }
+            return result;
         }
     }
 }

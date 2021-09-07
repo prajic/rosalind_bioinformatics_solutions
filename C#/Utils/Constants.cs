@@ -323,6 +323,8 @@ namespace Utils
         5);
         public static NumberNumbersListInput BA5AFirstExample = new NumberNumbersListInput(40, new List<int>() { 1, 5, 10, 20, 25, 50 });
         public static NumberNumbersListInput BA5ASecondExample = new NumberNumbersListInput(8074, new List<int>() { 24, 13, 12, 7, 5, 3, 1 });
+        public static SignedPermutations BA6AFirstExample = new SignedPermutations(new List<int>() { -3, +4, +1, +5, -2 });
+        public static SignedPermutations BA6ASecondExample = Reader.ReadPermutationsFromFile("ba6aFirstExample.txt");
     }
 
     public struct TextNumberInput
@@ -563,6 +565,27 @@ namespace Utils
             {
                 message += string.Format("{0} ", coin);
             }
+            return message;
+        }
+    }
+    public struct SignedPermutations
+    {
+        public List<int> permutations { get; set; }
+
+        public SignedPermutations(List<int> _permutations)
+        {
+            permutations = _permutations;
+        }
+        public override string ToString()
+        {
+            var message = "( ";
+            foreach (var p in permutations)
+            {
+                var sign = p >= 0 ? "+" : "";
+                message += $"{sign}{p} ";
+            }
+            message += ")";
+
             return message;
         }
     }

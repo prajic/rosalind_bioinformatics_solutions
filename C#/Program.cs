@@ -41,7 +41,8 @@ namespace Rosalind
             // BA4J.ExecuteTask();
             // BA4K.ExecuteTask();
             // BA4L.ExecuteTask();
-            BA5A.ExecuteTask();
+            // BA5A.ExecuteTask();
+            BA6A.ExecuteTask();
             Console.ReadKey();
         }
 
