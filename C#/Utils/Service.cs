@@ -1292,16 +1292,38 @@ namespace Utils
             linearSpectrum.Sort();
             return linearSpectrum;
         }
+        private static List<int> GetLinearSpectrumList(string peptide)
+        {
+            var subPeptides = new List<string>() { "", peptide };
+            for (var i = 1; i < peptide.Length; i++)
+            {
+                for (var ii = 0; ii < peptide.Length - i + 1; ii++)
+                {
+                    int length = ii + i - ii + 1;
+                    subPeptides.Add(peptide.Substring(ii, i));
+                }
+            }
+            var spectrum = new List<int>();
+            foreach (var subpeptide in subPeptides)
+            {
+                spectrum.Add(GetPeptideMass(subpeptide));
+            }
+            spectrum.Sort();
+            return spectrum;
+
+        }
         public static int GetLinearPeptideScore(TextNumberListInput taskInput)
         {
             var spectrum = taskInput.numbers;
             var peptide = taskInput.pattern;
             var counter = 0;
-            foreach (var value in GetLinearSpectrum(peptide))
+            var linearSpectrum = GetLinearSpectrumList(peptide);
+            foreach (var value in linearSpectrum)
             {
                 if (spectrum.Contains(value))
                 {
                     counter++;
+                    spectrum.Remove(value);
                 }
             }
             return counter;
@@ -1316,7 +1338,7 @@ namespace Utils
             var linearScores = new List<int>();
             foreach (var peptide in peptides)
             {
-                linearScores.Add(GetLinearPeptideScore(new TextNumberListInput(peptide, spectrum)));
+                linearScores.Add(GetLinearPeptideScore(new TextNumberListInput(peptide, new List<int>(spectrum))));
             }
             var newOrdering = linearScores
             .Select((linearScore, index) => new { linearScore, index })
@@ -1326,17 +1348,7 @@ namespace Utils
             linearScores = newOrdering.Select(item => linearScores[item.index]).ToList();
             peptides = newOrdering.Select(item => peptides[item.index]).ToList();
 
-            for (var i = n; i < peptides.Count; i++)
-            {
-                if (linearScores[i] < linearScores[n - 1])
-                {
-                    for (var ii = 0; ii < peptides.Count - i; ii++)
-                    {
-                        peptides.RemoveAt(peptides.Count - 1);
-                    }
-                }
-            }
-            return peptides;
+            return peptides.Where((_, index) => linearScores[index] >= linearScores[n - 1]).ToList();
 
         }
         public static int GetChange(NumberNumbersListInput taskInput)
